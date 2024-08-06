@@ -28,9 +28,12 @@ class HabitDatabase extends ChangeNotifier {
   }
 
   final List<Habit> currentHabits = [];
+  final List<Habit> newHabits = [];
+
   Future<void> addHabit(String habitName) async {
     final newHabit = Habit()..name = habitName;
     await isar.writeTxn(() => isar.habits.put(newHabit));
+    newHabits.add(newHabit); // Add to newHabits list
     readHabits();
   }
 
@@ -62,26 +65,48 @@ class HabitDatabase extends ChangeNotifier {
         }
         await isar.habits.put(habit);
       });
+      // Refresh only the updated habit
+      final updatedHabit = await isar.habits.get(id);
+      if (updatedHabit != null) {
+        final index = currentHabits.indexWhere((h) => h.id == id);
+        if (index != -1) {
+          currentHabits[index] = updatedHabit;
+          notifyListeners();
+        }
+      }
     }
-    readHabits();
   }
 
   Future<void> updateHabitsName(int id, String newName) async {
     final habit = await isar.habits.get(id);
-
     if (habit != null) {
       await isar.writeTxn(() async {
         habit.name = newName;
         await isar.habits.put(habit);
       });
+      // Refresh only the updated habit
+      final updatedHabit = await isar.habits.get(id);
+      if (updatedHabit != null) {
+        final index = currentHabits.indexWhere((h) => h.id == id);
+        if (index != -1) {
+          currentHabits[index] = updatedHabit;
+          notifyListeners();
+        }
+      }
     }
-    readHabits();
   }
 
   Future<void> deleteHabit(int id) async {
-    await isar.writeTxn(() async {
-      await isar.habits.delete(id);
-    });
-    readHabits();
+    final habit = await isar.habits.get(id);
+    if (habit != null) {
+      await isar.writeTxn(() async {
+        // Mark the habit as inactive instead of deleting it
+        habit.name = '[Deleted] ${habit.name}'; // Optionally mark it as deleted
+        habit.creationDate = DateTime.now(); // Update creation date if needed
+        await isar.habits.put(habit);
+      });
+      // Refresh the list after modification
+      readHabits();
+    }
   }
 }

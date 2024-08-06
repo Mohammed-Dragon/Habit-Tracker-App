@@ -8,5 +8,6 @@ ThemeData lightMode = ThemeData(
     tertiary: Colors.white,
     inversePrimary: Colors.grey.shade900,
     background: Colors.grey.shade200,
+    error: Color.fromARGB(230, 20, 43, 195),
   ),
 );

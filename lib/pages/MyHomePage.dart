@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ler/database/habit_database.dart';
 import 'package:ler/models/habit.dart';
+import 'package:ler/themes/color_provider.dart';
 import 'package:ler/themes/theme_provider.dart';
 import 'package:ler/util/habit_uril.dart';
 import 'package:ler/widgets/heatmap.dart';
@@ -15,6 +16,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int R = 20, G = 195, B = 29;
+
+  List<Color> colors = [
+    Color.fromARGB(255, 157, 47, 184),
+    Color.fromARGB(255, 76, 77, 220),
+    Color.fromARGB(255, 38, 170, 151),
+    Color.fromARGB(255, 21, 121, 73),
+    Color.fromARGB(255, 50, 182, 72),
+    Color.fromARGB(255, 198, 124, 78),
+  ];
   @override
   void initState() {
     Provider.of<HabitDatabase>(context, listen: false).readHabits();
@@ -326,8 +337,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
-                onPressed: () {
-                  context.read<HabitDatabase>().deleteHabit(habit.id);
+                onPressed: () async {
+                  print(
+                      'Before deletion: ${context.read<HabitDatabase>().currentHabits.length}');
+
+                  await context.read<HabitDatabase>().deleteHabit(habit.id);
+
+                  print(
+                      'After deletion: ${context.read<HabitDatabase>().currentHabits.length}');
+
                   Navigator.pop(context);
                 },
                 child: Text(
@@ -378,55 +396,90 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 30),
-          child: Switch(
-            value: Provider.of<ThemeProvider>(context).isDarkMode,
-            onChanged: (value) =>
-                Provider.of<ThemeProvider>(context, listen: false)
-                    .toggleTheme(),
-          ),
-        ),
-        elevation: 0,
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: createNewHabit,
-        backgroundColor: Theme.of(context).colorScheme.background,
-        shape: CircleBorder(),
-        child: Icon(
-          Icons.add,
-          color: Theme.of(context).colorScheme.inversePrimary,
-        ),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20),
-            child: _buildHeatMap(),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: context.watch<HabitDatabase>().currentHabits.length,
-              itemBuilder: (context, index) {
-                final habitDatabase = context.watch<HabitDatabase>();
-                List<Habit> currentHabits = habitDatabase.currentHabits;
-                final habit = currentHabits[index];
-                bool isCompletedToday =
-                    isHabitCompletedToday(habit.completedDays);
-                return MyHabitTile(
-                  isCompleted: isCompletedToday,
-                  text: habit.name,
-                  onChanged: (value) => checkHabitOnOff(value, habit),
-                  editHabit: (context) => editHabitBox(habit),
-                  deleteHabit: (context) => deleteHabitBox(habit),
-                );
-              },
+    return Consumer<ColorProvider>(
+      builder: (context, colorProvider, child) => Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        appBar: AppBar(
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 30),
+            child: Switch(
+              value: Provider.of<ThemeProvider>(context).isDarkMode,
+              onChanged: (value) =>
+                  Provider.of<ThemeProvider>(context, listen: false)
+                      .toggleTheme(colorProvider),
             ),
           ),
-        ],
+          actions: [
+            Padding(
+                padding: const EdgeInsets.only(right: 15.0),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<Color>(
+                    icon: Icon(
+                      Icons.circle,
+                      size: 35,
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                    onChanged: (Color? newColor) {
+                      if (newColor != null) {
+                        Provider.of<ColorProvider>(context, listen: false)
+                            .updateThemeColor(
+                          newColor,
+                          Provider.of<ThemeProvider>(context, listen: false)
+                              .isDarkMode,
+                          context,
+                        );
+                      }
+                    },
+                    items: colors
+                        .map((color) => DropdownMenuItem<Color>(
+                              value: color,
+                              child: CircleAvatar(
+                                backgroundColor: color,
+                              ),
+                            ))
+                        .toList(),
+                  ),
+                )),
+          ],
+          elevation: 0,
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: createNewHabit,
+          backgroundColor: Theme.of(context).colorScheme.background,
+          shape: CircleBorder(),
+          child: Icon(
+            Icons.add,
+            color: Theme.of(context).colorScheme.inversePrimary,
+          ),
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: _buildHeatMap(),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount:
+                    context.watch<HabitDatabase>().currentHabits.length, //
+                itemBuilder: (context, index) {
+                  final habitDatabase = context.watch<HabitDatabase>();
+                  List<Habit> currentHabits = habitDatabase.currentHabits; //
+                  final habit = currentHabits[index];
+                  bool isCompletedToday =
+                      isHabitCompletedToday(habit.completedDays);
+                  return MyHabitTile(
+                    isCompleted: isCompletedToday,
+                    text: habit.name,
+                    onChanged: (value) => checkHabitOnOff(value, habit),
+                    editHabit: (context) => editHabitBox(habit),
+                    deleteHabit: (context) => deleteHabitBox(habit),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -434,6 +487,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildHeatMap() {
     final habitDatabase = context.watch<HabitDatabase>();
     List<Habit> currentHabits = habitDatabase.currentHabits;
+    List<Habit> newHabits = habitDatabase.newHabits;
+    List<Habit> allHabits = List.from(currentHabits)
+      ..addAll(newHabits); // Combine both lists
+
     return FutureBuilder<DateTime?>(
       future: habitDatabase.getFirst(),
       builder: (context, snapshot) {
@@ -442,34 +499,11 @@ class _MyHomePageState extends State<MyHomePage> {
               snapshot.data!.month - 1, snapshot.data!.day);
           return MyHeatMap(
             startDate: adjustedStartDate,
-            datasets: prepHeatMapDataset(currentHabits),
+            datasets: prepHeatMapDataset(allHabits), // Use combined list
           );
         } else {
           return Container();
         }
-      },
-    );
-  }
-
-  Widget _buildHabitList() {
-    final habitDatabase = context.watch<HabitDatabase>();
-    List<Habit> currentHabits = habitDatabase.currentHabits;
-    return ListView.builder(
-      itemCount: currentHabits.length,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        final habit = currentHabits[index];
-        bool isCompletedToday = isHabitCompletedToday(
-          habit.completedDays,
-        );
-        return MyHabitTile(
-          isCompleted: isCompletedToday,
-          text: habit.name,
-          onChanged: (value) => checkHabitOnOff(value, habit),
-          editHabit: (context) => editHabitBox(habit),
-          deleteHabit: (comtext) => deleteHabitBox(habit),
-        );
       },
     );
   }

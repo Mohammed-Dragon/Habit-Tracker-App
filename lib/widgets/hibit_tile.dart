@@ -54,7 +54,7 @@ class MyHabitTile extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: isCompleted
-                  ? Color.fromARGB(230, 20, 195, 29)
+                  ? Theme.of(context).colorScheme.error
                   : Theme.of(context).colorScheme.secondary,
             ),
             padding: EdgeInsets.all(12),
