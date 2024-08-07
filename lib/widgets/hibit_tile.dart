@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-// ignore: must_be_immutable
 class MyHabitTile extends StatelessWidget {
   final String text;
   final bool isCompleted;
@@ -20,14 +19,16 @@ class MyHabitTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+      padding: EdgeInsets.symmetric(
+          vertical: MediaQuery.of(context).size.height / 150,
+          horizontal: MediaQuery.of(context).size.width / 30),
       child: Slidable(
         startActionPane: ActionPane(
           motion: StretchMotion(),
           children: [
             SlidableAction(
               onPressed: editHabit,
-              backgroundColor: Colors.grey.shade800,
+              backgroundColor: Color.fromARGB(255, 37, 101, 152),
               icon: Icons.settings,
               borderRadius: BorderRadius.circular(8),
             ),

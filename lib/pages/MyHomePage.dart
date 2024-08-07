@@ -1,4 +1,6 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ler/database/habit_database.dart';
 import 'package:ler/models/habit.dart';
 import 'package:ler/themes/color_provider.dart';
@@ -7,6 +9,7 @@ import 'package:ler/util/habit_uril.dart';
 import 'package:ler/widgets/heatmap.dart';
 import 'package:ler/widgets/hibit_tile.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -16,15 +19,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int R = 20, G = 195, B = 29;
-
   List<Color> colors = [
-    Color.fromARGB(255, 157, 47, 184),
-    Color.fromARGB(255, 76, 77, 220),
-    Color.fromARGB(255, 38, 170, 151),
-    Color.fromARGB(255, 21, 121, 73),
-    Color.fromARGB(255, 50, 182, 72),
-    Color.fromARGB(255, 198, 124, 78),
+    const Color.fromARGB(255, 157, 47, 184),
+    const Color.fromARGB(255, 76, 77, 220),
+    const Color.fromARGB(255, 38, 170, 151),
+    const Color.fromARGB(255, 21, 121, 73),
+    const Color.fromARGB(255, 50, 182, 72),
+    const Color.fromARGB(255, 198, 124, 78),
   ];
   @override
   void initState() {
@@ -33,7 +34,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   final TextEditingController textController = TextEditingController();
-
   void createNewHabit() {
     textController.clear();
     showDialog(
@@ -330,7 +330,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: ElevatedButton.styleFrom(
                   fixedSize: Size(
                     MediaQuery.of(context).size.width,
-                    45,
+                    MediaQuery.of(context).size.height / 20,
                   ),
                   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
                   shape: RoundedRectangleBorder(
@@ -399,49 +399,197 @@ class _MyHomePageState extends State<MyHomePage> {
     return Consumer<ColorProvider>(
       builder: (context, colorProvider, child) => Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,
-        appBar: AppBar(
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 30),
-            child: Switch(
-              value: Provider.of<ThemeProvider>(context).isDarkMode,
-              onChanged: (value) =>
-                  Provider.of<ThemeProvider>(context, listen: false)
-                      .toggleTheme(colorProvider),
-            ),
-          ),
-          actions: [
-            Padding(
-                padding: const EdgeInsets.only(right: 15.0),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<Color>(
-                    icon: Icon(
-                      Icons.circle,
-                      size: 35,
-                      color: Theme.of(context).colorScheme.error,
+        drawer: Drawer(
+          width: MediaQuery.of(context).size.width * 2 / 3,
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height / 20,
+                ),
+                child: Text(
+                  'Habit Tracker',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.orbitron(
+                    textStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                      fontSize: MediaQuery.of(context).size.width / 10,
+                      fontWeight: FontWeight.bold,
                     ),
-                    onChanged: (Color? newColor) {
-                      if (newColor != null) {
-                        Provider.of<ColorProvider>(context, listen: false)
-                            .updateThemeColor(
-                          newColor,
-                          Provider.of<ThemeProvider>(context, listen: false)
-                              .isDarkMode,
-                          context,
-                        );
-                      }
-                    },
-                    items: colors
-                        .map((color) => DropdownMenuItem<Color>(
-                              value: color,
-                              child: CircleAvatar(
-                                backgroundColor: color,
-                              ),
-                            ))
-                        .toList(),
                   ),
-                )),
-          ],
-          elevation: 0,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: MediaQuery.of(context).size.height / 60,
+                ),
+                child: Divider(
+                  thickness: 1,
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width / 40),
+                child: ListTile(
+                  splashColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  selectedTileColor: Colors.transparent,
+                  leading: const Icon(
+                    Icons.home,
+                    color: Colors.grey,
+                  ),
+                  title: Text(
+                    "Home Page",
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width / 23,
+                    ),
+                  ),
+                  onTap: () => Navigator.pop(context),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.width / 40,
+                    left: MediaQuery.of(context).size.width / 40),
+                child: ListTile(
+                  splashColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  selectedTileColor: Colors.transparent,
+                  trailing: Padding(
+                    padding: const EdgeInsets.only(left: 30),
+                    child: Switch(
+                      value: Provider.of<ThemeProvider>(context).isDarkMode,
+                      onChanged: (value) =>
+                          Provider.of<ThemeProvider>(context, listen: false)
+                              .toggleTheme(colorProvider),
+                    ),
+                  ),
+                  leading: Icon(
+                    Provider.of<ThemeProvider>(context).isDarkMode
+                        ? Icons.dark_mode
+                        : Icons.light_mode,
+                    color: Colors.grey,
+                  ),
+                  title: Text(
+                    Provider.of<ThemeProvider>(context).isDarkMode
+                        ? "Dark Mode"
+                        : "Light Mode",
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width / 23,
+                    ),
+                  ),
+                  onTap: () =>
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .toggleTheme(colorProvider),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.width / 40,
+                    left: MediaQuery.of(context).size.width / 40),
+                child: ListTile(
+                  splashColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  selectedTileColor: Colors.transparent,
+                  trailing: DropdownButtonHideUnderline(
+                    child: DropdownButton2<Color>(
+                      isDense: true,
+                      alignment: AlignmentDirectional.center,
+                      buttonStyleData: ButtonStyleData(
+                        padding: EdgeInsets.only(
+                            right: MediaQuery.of(context).size.width / 24),
+                        height: MediaQuery.of(context).size.height / 22,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.surface,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      dropdownStyleData: DropdownStyleData(
+                        elevation: 0,
+                        width: MediaQuery.of(context).size.width / 6,
+                        offset: Offset(
+                          MediaQuery.of(context).size.width / 14,
+                          MediaQuery.of(context).size.height / 15,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.surface,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      iconStyleData: IconStyleData(
+                        icon: Icon(
+                          Icons.circle,
+                          size: MediaQuery.of(context).size.width / 11,
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                      ),
+                      onChanged: (Color? newColor) {
+                        if (newColor != null) {
+                          Provider.of<ColorProvider>(context, listen: false)
+                              .updateThemeColor(
+                            newColor,
+                            Provider.of<ThemeProvider>(context, listen: false)
+                                .isDarkMode,
+                            context,
+                          );
+                        }
+                      },
+                      items: colors
+                          .map((color) => DropdownMenuItem<Color>(
+                                value: color,
+                                child: CircleAvatar(
+                                  backgroundColor: color,
+                                ),
+                              ))
+                          .toList(),
+                    ),
+                  ),
+                  leading: const Icon(
+                    Icons.color_lens,
+                    color: Colors.grey,
+                  ),
+                  title: Text(
+                    "App Color",
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width / 23,
+                    ),
+                  ),
+                  onTap: () => {},
+                ),
+              ),
+              const Spacer(),
+              Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).size.width / 40,
+                    left: MediaQuery.of(context).size.width / 40),
+                child: ListTile(
+                  splashColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  selectedTileColor: Colors.transparent,
+                  leading: const Icon(
+                    Icons.logout,
+                    color: Colors.grey,
+                  ),
+                  title: Text(
+                    "Exit",
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width / 23),
+                  ),
+                  onTap: () {
+                    SystemNavigator.pop();
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+        appBar: AppBar(
+          leadingWidth: MediaQuery.of(context).size.height / 15,
+          iconTheme: IconThemeData(
+            size: MediaQuery.of(context).size.height / 24,
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: createNewHabit,

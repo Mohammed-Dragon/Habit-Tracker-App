@@ -8,4 +8,5 @@ class Habit {
   late String name;
   DateTime creationDate = DateTime.now();
   List<DateTime> completedDays = [];
+  bool isActive = true; // Add isActive field
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ler/database/habit_database.dart';
-import 'package:ler/pages/MyHomePage.dart';
+import 'package:ler/pages/SplashScreen.dart';
 import 'package:ler/themes/color_provider.dart';
 import 'package:ler/themes/dark_mode.dart';
 import 'package:ler/themes/light_mode.dart';
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
+      home: SplashScreen(),
       theme: themeData,
     );
   }
