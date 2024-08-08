@@ -7,6 +7,7 @@ class MyHabitTile extends StatelessWidget {
   final void Function(bool?)? onChanged;
   final void Function(BuildContext)? editHabit;
   final void Function(BuildContext)? deleteHabit;
+
   const MyHabitTile({
     super.key,
     required this.isCompleted,
@@ -20,9 +21,11 @@ class MyHabitTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-          vertical: MediaQuery.of(context).size.height / 150,
-          horizontal: MediaQuery.of(context).size.width / 30),
+        vertical: MediaQuery.of(context).size.height / 150,
+        horizontal: MediaQuery.of(context).size.width / 30,
+      ),
       child: Slidable(
+        // Action panes for editing and deleting habits
         startActionPane: ActionPane(
           motion: StretchMotion(),
           children: [
@@ -38,7 +41,12 @@ class MyHabitTile extends StatelessWidget {
           motion: StretchMotion(),
           children: [
             SlidableAction(
-              onPressed: deleteHabit,
+              onPressed: (context) {
+                // Ensure deletion is handled within the context
+                if (deleteHabit != null) {
+                  deleteHabit!(context);
+                }
+              },
               backgroundColor: Colors.red,
               icon: Icons.delete,
               borderRadius: BorderRadius.circular(8),
@@ -48,7 +56,7 @@ class MyHabitTile extends StatelessWidget {
         child: GestureDetector(
           onTap: () {
             if (onChanged != null) {
-              onChanged!(!isCompleted);
+              onChanged!(!isCompleted); // Toggle completion status
             }
           },
           child: Container(
@@ -73,7 +81,7 @@ class MyHabitTile extends StatelessWidget {
                 activeColor: Color.fromARGB(0, 20, 181, 28),
                 checkColor: Colors.white,
                 value: isCompleted,
-                onChanged: onChanged,
+                onChanged: onChanged, // Handle checkbox changes
               ),
             ),
           ),

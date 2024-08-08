@@ -20,8 +20,8 @@ class MyHeatMap extends StatelessWidget {
       showColorTip: false,
       showText: true,
       scrollable: true,
-      fontSize: MediaQuery.of(context).size.width / 34,
-      size: MediaQuery.of(context).size.height / 20,
+      fontSize: MediaQuery.of(context).size.width / 30,
+      size: MediaQuery.of(context).size.width / 12,
       colorsets: Colors,
     );
   }

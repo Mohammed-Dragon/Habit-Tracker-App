@@ -43,8 +43,8 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Center(
               child: Container(
-                width: 80,
-                height: 80,
+                width: MediaQuery.of(context).size.width / 6,
+                height: MediaQuery.of(context).size.width / 6,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.inversePrimary,
                   shape: BoxShape.circle,
@@ -52,15 +52,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Icon(
                   Icons.edit_note,
                   color: Theme.of(context).colorScheme.surface,
-                  size: 50.0,
+                  size: MediaQuery.of(context).size.width / 8,
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height / 50,
+                bottom: MediaQuery.of(context).size.height / 70,
+              ),
               child: Text(
                 "New Habit",
                 style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width / 17,
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.inversePrimary,
                 ),
@@ -68,20 +72,15 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-        content: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              style: TextStyle(
-                fontSize: 17,
-              ),
-              controller: textController,
-              decoration: InputDecoration(
-                hintText: "Enter a new habit",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
+        content: TextField(
+          style: TextStyle(
+            fontSize: MediaQuery.of(context).size.width / 23,
+          ),
+          controller: textController,
+          decoration: InputDecoration(
+            hintText: "Enter a new habit",
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
             ),
           ),
         ),
@@ -89,13 +88,13 @@ class _MyHomePageState extends State<MyHomePage> {
           Column(
             children: [
               SizedBox(
-                height: 30,
+                height: MediaQuery.of(context).size.height / 70,
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   fixedSize: Size(
                     MediaQuery.of(context).size.width,
-                    45,
+                    MediaQuery.of(context).size.height / 19,
                   ),
                   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
                   shape: RoundedRectangleBorder(
@@ -112,18 +111,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   "Save",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.tertiary,
-                    fontSize: 16,
+                    fontSize: MediaQuery.of(context).size.width / 23,
                   ),
                 ),
               ),
               SizedBox(
-                height: 8,
+                height: MediaQuery.of(context).size.height / 150,
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   fixedSize: Size(
                     MediaQuery.of(context).size.width,
-                    45,
+                    MediaQuery.of(context).size.height / 19,
                   ),
                   backgroundColor: Theme.of(context).colorScheme.surface,
                   shape: RoundedRectangleBorder(
@@ -142,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   "Cancel",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.inversePrimary,
-                    fontSize: 16,
+                    fontSize: MediaQuery.of(context).size.width / 23,
                   ),
                 ),
               ),
@@ -172,8 +171,8 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Center(
               child: Container(
-                width: 80,
-                height: 80,
+                width: MediaQuery.of(context).size.width / 6,
+                height: MediaQuery.of(context).size.width / 6,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.inversePrimary,
                   shape: BoxShape.circle,
@@ -181,15 +180,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Icon(
                   Icons.settings,
                   color: Theme.of(context).colorScheme.surface,
-                  size: 40.0,
+                  size: MediaQuery.of(context).size.width / 10,
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height / 50,
+                bottom: MediaQuery.of(context).size.height / 70,
+              ),
               child: Text(
                 "Edit The Habit",
                 style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width / 17,
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.inversePrimary,
                 ),
@@ -199,7 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         content: TextField(
           style: TextStyle(
-            fontSize: 17,
+            fontSize: MediaQuery.of(context).size.width / 23,
           ),
           controller: textController,
           decoration: InputDecoration(
@@ -212,13 +215,13 @@ class _MyHomePageState extends State<MyHomePage> {
           Column(
             children: [
               SizedBox(
-                height: 30,
+                height: MediaQuery.of(context).size.height / 70,
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   fixedSize: Size(
                     MediaQuery.of(context).size.width,
-                    45,
+                    MediaQuery.of(context).size.height / 19,
                   ),
                   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
                   shape: RoundedRectangleBorder(
@@ -237,18 +240,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   "Save",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.tertiary,
-                    fontSize: 16,
+                    fontSize: MediaQuery.of(context).size.width / 23,
                   ),
                 ),
               ),
               SizedBox(
-                height: 8,
+                height: MediaQuery.of(context).size.height / 150,
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   fixedSize: Size(
                     MediaQuery.of(context).size.width,
-                    45,
+                    MediaQuery.of(context).size.height / 19,
                   ),
                   backgroundColor: Theme.of(context).colorScheme.surface,
                   shape: RoundedRectangleBorder(
@@ -267,7 +270,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   "Cancel",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.inversePrimary,
-                    fontSize: 16,
+                    fontSize: MediaQuery.of(context).size.width / 23,
                   ),
                 ),
               ),
@@ -291,8 +294,8 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Center(
               child: Container(
-                width: 80,
-                height: 80,
+                width: MediaQuery.of(context).size.width / 6,
+                height: MediaQuery.of(context).size.width / 6,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.inversePrimary,
                   shape: BoxShape.circle,
@@ -300,15 +303,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Icon(
                   Icons.delete_forever,
                   color: Theme.of(context).colorScheme.surface,
-                  size: 50.0,
+                  size: MediaQuery.of(context).size.width / 10,
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
+              padding: EdgeInsets.symmetric(
+                vertical: MediaQuery.of(context).size.height / 50,
+              ),
               child: Text(
                 "Delete The Habit",
                 style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width / 17,
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.inversePrimary,
                 ),
@@ -325,12 +331,14 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           Column(
             children: [
-              SizedBox(height: 30),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 70,
+              ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   fixedSize: Size(
                     MediaQuery.of(context).size.width,
-                    MediaQuery.of(context).size.height / 20,
+                    MediaQuery.of(context).size.height / 19,
                   ),
                   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
                   shape: RoundedRectangleBorder(
@@ -352,16 +360,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   "Delete",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.tertiary,
-                    fontSize: 16,
+                    fontSize: MediaQuery.of(context).size.width / 23,
                   ),
                 ),
               ),
-              SizedBox(height: 8),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 150,
+              ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   fixedSize: Size(
                     MediaQuery.of(context).size.width,
-                    45,
+                    MediaQuery.of(context).size.height / 19,
                   ),
                   backgroundColor: Theme.of(context).colorScheme.surface,
                   shape: RoundedRectangleBorder(
@@ -379,7 +389,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   "Cancel",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.inversePrimary,
-                    fontSize: 16,
+                    fontSize: MediaQuery.of(context).size.width / 23,
                   ),
                 ),
               ),
@@ -406,7 +416,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height / 20,
+                  top: MediaQuery.of(context).size.height / 15,
                 ),
                 child: Text(
                   'Habit Tracker',
@@ -421,183 +431,175 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: MediaQuery.of(context).size.height / 60,
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height / 50,
+                  bottom: MediaQuery.of(context).size.height / 70,
                 ),
                 child: Divider(
                   thickness: 1,
                   color: Theme.of(context).colorScheme.inversePrimary,
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width / 40),
-                child: ListTile(
-                  splashColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  selectedTileColor: Colors.transparent,
-                  leading: const Icon(
-                    Icons.home,
-                    color: Colors.grey,
-                  ),
-                  title: Text(
-                    "Home Page",
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width / 23,
-                    ),
-                  ),
-                  onTap: () => Navigator.pop(context),
+              ListTile(
+                splashColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                selectedTileColor: Colors.transparent,
+                leading: Icon(
+                  size: MediaQuery.of(context).size.width / 17,
+                  Icons.home,
+                  color: Colors.grey,
                 ),
+                title: Text(
+                  "Home Page",
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width / 25,
+                  ),
+                ),
+                onTap: () => Navigator.pop(context),
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width / 40,
-                    left: MediaQuery.of(context).size.width / 40),
-                child: ListTile(
-                  splashColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  selectedTileColor: Colors.transparent,
-                  trailing: Padding(
-                    padding: const EdgeInsets.only(left: 30),
-                    child: Switch(
-                      value: Provider.of<ThemeProvider>(context).isDarkMode,
-                      onChanged: (value) =>
-                          Provider.of<ThemeProvider>(context, listen: false)
-                              .toggleTheme(colorProvider),
-                    ),
-                  ),
-                  leading: Icon(
-                    Provider.of<ThemeProvider>(context).isDarkMode
-                        ? Icons.dark_mode
-                        : Icons.light_mode,
-                    color: Colors.grey,
-                  ),
-                  title: Text(
-                    Provider.of<ThemeProvider>(context).isDarkMode
-                        ? "Dark Mode"
-                        : "Light Mode",
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width / 23,
-                    ),
-                  ),
-                  onTap: () =>
+              ListTile(
+                splashColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                selectedTileColor: Colors.transparent,
+                trailing: Switch(
+                  value: Provider.of<ThemeProvider>(context).isDarkMode,
+                  onChanged: (value) =>
                       Provider.of<ThemeProvider>(context, listen: false)
                           .toggleTheme(colorProvider),
                 ),
+                leading: Icon(
+                  Provider.of<ThemeProvider>(context).isDarkMode
+                      ? Icons.dark_mode
+                      : Icons.light_mode,
+                  color: Colors.grey,
+                ),
+                title: Text(
+                  Provider.of<ThemeProvider>(context).isDarkMode
+                      ? "Dark Mode"
+                      : "Light Mode",
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width / 25,
+                  ),
+                ),
+                onTap: () => Provider.of<ThemeProvider>(context, listen: false)
+                    .toggleTheme(colorProvider),
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width / 40,
-                    left: MediaQuery.of(context).size.width / 40),
-                child: ListTile(
-                  splashColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  selectedTileColor: Colors.transparent,
-                  trailing: DropdownButtonHideUnderline(
-                    child: DropdownButton2<Color>(
-                      isDense: true,
-                      alignment: AlignmentDirectional.center,
-                      buttonStyleData: ButtonStyleData(
+              ListTile(
+                splashColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                selectedTileColor: Colors.transparent,
+                trailing: DropdownButtonHideUnderline(
+                  child: DropdownButton2<Color>(
+                    isDense: true,
+                    buttonStyleData: ButtonStyleData(
+                      height: MediaQuery.of(context).size.height / 22,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surface,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    dropdownStyleData: DropdownStyleData(
+                      elevation: 0,
+                      width: MediaQuery.of(context).size.width / 6,
+                      offset: Offset(
+                        MediaQuery.of(context).size.width / 18,
+                        MediaQuery.of(context).size.height / 17,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surface,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    iconStyleData: IconStyleData(
+                      icon: Padding(
                         padding: EdgeInsets.only(
-                            right: MediaQuery.of(context).size.width / 24),
-                        height: MediaQuery.of(context).size.height / 22,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surface,
-                          borderRadius: BorderRadius.circular(10),
+                          right: MediaQuery.of(context).size.width / 50,
                         ),
-                      ),
-                      dropdownStyleData: DropdownStyleData(
-                        elevation: 0,
-                        width: MediaQuery.of(context).size.width / 6,
-                        offset: Offset(
-                          MediaQuery.of(context).size.width / 14,
-                          MediaQuery.of(context).size.height / 15,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surface,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      iconStyleData: IconStyleData(
-                        icon: Icon(
+                        child: Icon(
                           Icons.circle,
-                          size: MediaQuery.of(context).size.width / 11,
+                          size: MediaQuery.of(context).size.width / 12,
                           color: Theme.of(context).colorScheme.error,
                         ),
                       ),
-                      onChanged: (Color? newColor) {
-                        if (newColor != null) {
-                          Provider.of<ColorProvider>(context, listen: false)
-                              .updateThemeColor(
-                            newColor,
-                            Provider.of<ThemeProvider>(context, listen: false)
-                                .isDarkMode,
-                            context,
-                          );
-                        }
-                      },
-                      items: colors
-                          .map((color) => DropdownMenuItem<Color>(
-                                value: color,
-                                child: CircleAvatar(
-                                  backgroundColor: color,
-                                ),
-                              ))
-                          .toList(),
                     ),
+                    onChanged: (Color? newColor) {
+                      if (newColor != null) {
+                        Provider.of<ColorProvider>(context, listen: false)
+                            .updateThemeColor(
+                          newColor,
+                          Provider.of<ThemeProvider>(context, listen: false)
+                              .isDarkMode,
+                          context,
+                        );
+                      }
+                    },
+                    items: colors
+                        .map((color) => DropdownMenuItem<Color>(
+                              value: color,
+                              child: CircleAvatar(
+                                backgroundColor: color,
+                              ),
+                            ))
+                        .toList(),
                   ),
-                  leading: const Icon(
-                    Icons.color_lens,
-                    color: Colors.grey,
-                  ),
-                  title: Text(
-                    "App Color",
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width / 23,
-                    ),
-                  ),
-                  onTap: () => {},
                 ),
+                leading: Icon(
+                  size: MediaQuery.of(context).size.width / 17,
+                  Icons.color_lens,
+                  color: Colors.grey,
+                ),
+                title: Text(
+                  "App Color",
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width / 25,
+                  ),
+                ),
+                onTap: () => {},
               ),
-              const Spacer(),
+              Spacer(),
               Padding(
                 padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).size.width / 40,
-                    left: MediaQuery.of(context).size.width / 40),
+                  bottom: MediaQuery.of(context).size.height / 100,
+                ),
                 child: ListTile(
                   splashColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   selectedTileColor: Colors.transparent,
-                  leading: const Icon(
+                  leading: Icon(
                     Icons.logout,
+                    size: MediaQuery.of(context).size.width / 17,
                     color: Colors.grey,
                   ),
                   title: Text(
                     "Exit",
                     style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width / 23),
+                      fontSize: MediaQuery.of(context).size.width / 25,
+                    ),
                   ),
                   onTap: () {
                     SystemNavigator.pop();
                   },
                 ),
-              ),
+              )
             ],
           ),
         ),
         appBar: AppBar(
-          leadingWidth: MediaQuery.of(context).size.height / 15,
           iconTheme: IconThemeData(
-            size: MediaQuery.of(context).size.height / 24,
+            size: MediaQuery.of(context).size.width / 16,
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: createNewHabit,
-          backgroundColor: Theme.of(context).colorScheme.background,
-          shape: CircleBorder(),
-          child: Icon(
-            Icons.add,
-            color: Theme.of(context).colorScheme.inversePrimary,
+        floatingActionButton: SizedBox(
+          width: MediaQuery.of(context).size.width / 8,
+          child: FloatingActionButton(
+            onPressed: createNewHabit,
+            backgroundColor: Theme.of(context).colorScheme.background,
+            shape: CircleBorder(),
+            child: Icon(
+              size: MediaQuery.of(context).size.width / 16,
+              Icons.add,
+              color: Theme.of(context).colorScheme.inversePrimary,
+            ),
           ),
         ),
         body: Column(
@@ -608,11 +610,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount:
-                    context.watch<HabitDatabase>().currentHabits.length, //
+                itemCount: context.watch<HabitDatabase>().currentHabits.length,
                 itemBuilder: (context, index) {
                   final habitDatabase = context.watch<HabitDatabase>();
-                  List<Habit> currentHabits = habitDatabase.currentHabits; //
+                  List<Habit> currentHabits = habitDatabase.getValidHabits();
                   final habit = currentHabits[index];
                   bool isCompletedToday =
                       isHabitCompletedToday(habit.completedDays);
@@ -634,10 +635,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildHeatMap() {
     final habitDatabase = context.watch<HabitDatabase>();
-    List<Habit> currentHabits = habitDatabase.currentHabits;
-    List<Habit> newHabits = habitDatabase.newHabits;
-    List<Habit> allHabits = List.from(currentHabits)
-      ..addAll(newHabits); // Combine both lists
+
+    List<Habit> validCurrentHabits = habitDatabase.getValidHabits();
+    List<Habit> validNewHabits =
+        habitDatabase.newHabits.where((habit) => habit.isActive).toList();
+    List<Habit> allValidHabits = List.from(validCurrentHabits)
+      ..addAll(validNewHabits); // Combine both lists
 
     return FutureBuilder<DateTime?>(
       future: habitDatabase.getFirst(),
@@ -647,7 +650,8 @@ class _MyHomePageState extends State<MyHomePage> {
               snapshot.data!.month - 1, snapshot.data!.day);
           return MyHeatMap(
             startDate: adjustedStartDate,
-            datasets: prepHeatMapDataset(allHabits), // Use combined list
+            datasets:
+                prepHeatMapDataset(allValidHabits), // Use combined valid list
           );
         } else {
           return Container();

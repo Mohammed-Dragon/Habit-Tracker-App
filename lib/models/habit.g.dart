@@ -36,6 +36,11 @@ const HabitSchema = CollectionSchema(
       id: 3,
       name: r'name',
       type: IsarType.string,
+    ),
+    r'validCompletedDays': PropertySchema(
+      id: 4,
+      name: r'validCompletedDays',
+      type: IsarType.dateTimeList,
     )
   },
   estimateSize: _habitEstimateSize,
@@ -60,6 +65,7 @@ int _habitEstimateSize(
   var bytesCount = offsets.last;
   bytesCount += 3 + object.completedDays.length * 8;
   bytesCount += 3 + object.name.length * 3;
+  bytesCount += 3 + object.validCompletedDays.length * 8;
   return bytesCount;
 }
 
@@ -73,6 +79,7 @@ void _habitSerialize(
   writer.writeDateTime(offsets[1], object.creationDate);
   writer.writeBool(offsets[2], object.isActive);
   writer.writeString(offsets[3], object.name);
+  writer.writeDateTimeList(offsets[4], object.validCompletedDays);
 }
 
 Habit _habitDeserialize(
@@ -105,6 +112,8 @@ P _habitDeserializeProp<P>(
       return (reader.readBool(offset)) as P;
     case 3:
       return (reader.readString(offset)) as P;
+    case 4:
+      return (reader.readDateTimeList(offset) ?? []) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -580,6 +589,151 @@ extension HabitQueryFilter on QueryBuilder<Habit, Habit, QFilterCondition> {
       ));
     });
   }
+
+  QueryBuilder<Habit, Habit, QAfterFilterCondition>
+      validCompletedDaysElementEqualTo(DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'validCompletedDays',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Habit, Habit, QAfterFilterCondition>
+      validCompletedDaysElementGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'validCompletedDays',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Habit, Habit, QAfterFilterCondition>
+      validCompletedDaysElementLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'validCompletedDays',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Habit, Habit, QAfterFilterCondition>
+      validCompletedDaysElementBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'validCompletedDays',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Habit, Habit, QAfterFilterCondition>
+      validCompletedDaysLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'validCompletedDays',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Habit, Habit, QAfterFilterCondition>
+      validCompletedDaysIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'validCompletedDays',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Habit, Habit, QAfterFilterCondition>
+      validCompletedDaysIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'validCompletedDays',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Habit, Habit, QAfterFilterCondition>
+      validCompletedDaysLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'validCompletedDays',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<Habit, Habit, QAfterFilterCondition>
+      validCompletedDaysLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'validCompletedDays',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Habit, Habit, QAfterFilterCondition>
+      validCompletedDaysLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'validCompletedDays',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
 }
 
 extension HabitQueryObject on QueryBuilder<Habit, Habit, QFilterCondition> {}
@@ -699,6 +853,12 @@ extension HabitQueryWhereDistinct on QueryBuilder<Habit, Habit, QDistinct> {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
     });
   }
+
+  QueryBuilder<Habit, Habit, QDistinct> distinctByValidCompletedDays() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'validCompletedDays');
+    });
+  }
 }
 
 extension HabitQueryProperty on QueryBuilder<Habit, Habit, QQueryProperty> {
@@ -730,6 +890,13 @@ extension HabitQueryProperty on QueryBuilder<Habit, Habit, QQueryProperty> {
   QueryBuilder<Habit, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
+    });
+  }
+
+  QueryBuilder<Habit, List<DateTime>, QQueryOperations>
+      validCompletedDaysProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'validCompletedDays');
     });
   }
 }

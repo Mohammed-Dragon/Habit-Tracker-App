@@ -8,5 +8,15 @@ class Habit {
   late String name;
   DateTime creationDate = DateTime.now();
   List<DateTime> completedDays = [];
-  bool isActive = true; // Add isActive field
+  bool isActive = true;
+
+  List<DateTime> get validCompletedDays {
+    DateTime today = DateTime.now();
+    return completedDays.where((date) {
+      return date.isBefore(today) ||
+          (date.year == today.year &&
+              date.month == today.month &&
+              date.day == today.day);
+    }).toList();
+  }
 }
